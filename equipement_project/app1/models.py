@@ -61,7 +61,7 @@ class Equipment(models.Model):
 class Booking(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    booking_date = models.DateField(auto_now_add=True) 
+    booking_date = models.DateField() 
     return_date = models.DateField(null=True)
     STATUS_CHOICES = [
         ('Pending', 'Pending'),

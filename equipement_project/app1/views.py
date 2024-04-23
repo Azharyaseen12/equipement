@@ -38,7 +38,7 @@ def register(request):
             form.save()
             # Optionally, log in the user after registration
             # login(request, user)
-            return HttpResponse('registered user successfully')  # Redirect to home page after successful registration
+            messages.success(request,"your account has been created you can login after admin approval!")  # Redirect to home page after successful registration
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -80,11 +80,12 @@ def initiate_reservation(request,equipment_id):
     equipment = get_object_or_404(Equipment, pk=equipment_id)
     if request.method == 'POST':
         booking_date = request.POST.get('booking_date')
-        my_booking = Booking(user = request.user, equipment=equipment, booking_date=booking_date)
+        return_date = request.POST.get('return_date')
+        my_booking = Booking(user = request.user,return_date=return_date, equipment=equipment, booking_date=booking_date)
         my_booking.save()
-    # print(my_booking)
-    return HttpResponse(f"reservation added by {request.user} for {equipment}")
-
+        messages.success(request, 'reservation added by hasnat for my device')
+    
+    return redirect('user_profile')
 @login_required(login_url='login')
 def user_profile(request):
     user = request.user

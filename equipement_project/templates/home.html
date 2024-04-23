@@ -8,31 +8,39 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <style>
-        /* Add your custom CSS styles here */
+        /* Custom CSS styles */
+        body{
+            background-color: rgb(252, 252, 237);
+        }
         .card {
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            transition: box-shadow 0.3s ease;
+            margin-bottom: 30px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 1.0s ease;
         }
         .card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
         .card-text {
-            font-size: 1rem;
-            color: #666;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 10px;
         }
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
         .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            background-color: #495057;
+            border-color: #495057;
         }
     </style>
 </head>
@@ -41,21 +49,20 @@
         {% if user.is_authenticated %}
         <form method="GET" action="{% url 'user_profile' %}" class="mb-4">
             <button class="btn btn-primary mt-4">Profile</button>
-            <a href="{% url 'logout_view' %}" class="btn btn-primary mt-4">logout</a>
+            <a href="{% url 'logout_view' %}" class="btn btn-primary mt-4">Logout</a>
         </form>
         {% endif %}
         
         <h1 class="my-4">Welcome to the Home Page</h1>
         <!-- Search form -->
         <form method="GET" action="{% url 'home' %}" class="mb-4">
-            
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <select class="form-control" name="sort_by">
                         <option value="">-- Select Sorting Option --</option>
                         <option value="name_az">Sort by Name (A-Z)</option>
                         <option value="type">Sort by Equipment Type</option>
-                        <option value="Availability">Sort by Equipment Availability</option>
+                        <option value="availability">Sort by Equipment Availability</option>
                         <option value="return_date">Sort by Return Date</option>
                     </select>
                 </div>
@@ -68,27 +75,26 @@
             </div>
         </form>
         
-        
         <!-- Equipment cards -->
         {% if bookings %}
-        {% for bookings in bookings %}
+        {% for booking in bookings %}
         <div class="row">
             <div class="col-md-6 mx-auto">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ bookings.equipment.DeviceName }}</h5>
-                        <p class="card-text">Serial: {{ bookings.equipment.DeviceSerial }}</p>
-                        <p class="card-text">Type: {{ bookings.equipment.DeviceTypeID }}</p>
-                        <p class="card-text">CPU: {{ bookings.equipment.CPUID.Brand }} {{ equipment.CPUID.Model }}</p>
-                        <p class="card-text">GPU: {{ bookings.equipment.GPUID.Brand }} {{ equipment.GPUID.Model }}</p>
-                        <p class="card-text">RAM: {{ bookings.equipment.RAMID.Capacity }}GB {{ equipment.RAMID.Type }} RAM</p>
+                        <h5 class="card-title">{{ booking.equipment.DeviceName }}</h5>
+                        <p class="card-text">Serial: {{ booking.equipment.DeviceSerial }}</p>
+                        <p class="card-text">Type: {{ booking.equipment.DeviceTypeID }}</p>
+                        <p class="card-text">CPU: {{ booking.equipment.CPUID.Brand }} {{ booking.equipment.CPUID.Model }}</p>
+                        <p class="card-text">GPU: {{ booking.equipment.GPUID.Brand }} {{ booking.equipment.GPUID.Model }}</p>
+                        <p class="card-text">RAM: {{ booking.equipment.RAMID.Capacity }}GB {{ booking.equipment.RAMID.Type }} RAM</p>
+                        <p class="card-text">Return Date: {{ booking.return_date }}</p>
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
         {% else %}
-        
         {% for equipment in all_equipment %}
         <div class="row">
             <div class="col-md-6 mx-auto">
