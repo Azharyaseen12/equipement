@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Equipment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Book Equipment</h1>
+        <form method="POST" action="{% url 'initiate_reservation' equipment.pk %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ equipment.DeviceName }}</h5>
+                            <p class="card-text">Serial: {{ equipment.DeviceSerial }}</p>
+                            <p class="card-text">Type: {{ equipment.DeviceTypeID }}</p>
+                            <p class="card-text">CPU: {{ equipment.CPUID.Brand }} {{ equipment.CPUID.Model }}</p>
+                            <p class="card-text">GPU: {{ equipment.GPUID.Brand }} {{ equipment.GPUID.Model }}</p>
+                            <p class="card-text">RAM: {{ equipment.RAMID.Capacity }}GB {{ equipment.RAMID.Type }} RAM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="return_date">Return Date:</label>
+                <input type="date" class="form-control" id="return_date" name="return_date" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Book Now</button>
+        </form>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
